@@ -11,30 +11,33 @@
 using namespace std;
 
 void insertion_sort(list<int> &num) {
-    int i, j, key;
+    int key;
+    list<int>::iterator i;
     
     bool insertionNeeded = false;
     
-    for (j = 1; j < num.size(); j++) {
-        key = num[j];
+    for (list<int>::iterator j = num.begin(); j != num.end(); j++) {
+        key = *j;
         insertionNeeded = false;
-        for (i = j - 1; i >= 0; i--){
-            if (key < num[i]) {
-                num[i + 1] = num[i]; // larger values move right
+        for (i = j-- ; i != num.begin(); i--){
+            if (key < *i) {
+                *i++ = *i; // larger values move right
                 insertionNeeded = true;
             }
             else
                 break;
         }
         if (insertionNeeded)
-            num[i + 1] = key;    //Put key into its proper location
+            *i++ = key;    //Put key into its proper location
     }
     
 }
 
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+int main()
+{
+    list<int> new_list(10000);
+    insertion_sort(new_list);
+    //The performance is slower because we are using pointers and that overhead slows down the complier
     return 0;
 }
